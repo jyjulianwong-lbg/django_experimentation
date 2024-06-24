@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-experimentation
+  labels:
+    app: django-experimentation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-experimentation
+  template:
+    metadata:
+      labels:
+        app: django-experimentation
+    spec:
+      containers:
+      - name: django-experimentation
+        image: django-experimentation
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-experimentation-service
+spec:
+  selector:
+    app: django-experimentation
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30001
