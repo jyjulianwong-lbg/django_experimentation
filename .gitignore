@@ -1,3 +1,6 @@
+# Libraries
+**/__pycache__
+
 # Data
 data/
 db.sqlite3

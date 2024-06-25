@@ -86,6 +86,39 @@ DATABASES = {
     }
 }
 
+# Copied from tnt01-audmsa-aarp-app/blob/main/AARP/settings.py. 
+
+# DB_USER = os.getenv('DB_USER', '')
+# DB_PASS = os.getenv('DB_PASS', '')
+
+# database_defaults = {
+#     'HOST': '127.0.0.1',
+#     'USER': DB_USER,
+#     'PASSWORD': DB_PASS,
+#     'PORT': '5432',
+#     'OPTIONS': {
+#         'sslmode': 'disable'
+#     },
+# }
+
+# DATABASES = {
+#     'default': {},
+#     'application-db': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'application-db',
+#         **database_defaults,
+#     },
+#     'automation-db': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'automation-db',
+#         **database_defaults,
+#     },
+#     'reporting-db': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'reporting-db',
+#         **database_defaults,
+#     },
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
