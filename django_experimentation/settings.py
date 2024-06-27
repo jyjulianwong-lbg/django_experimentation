@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "polls.apps.PollsConfig",
     "google_cloud_storage.apps.GoogleCloudStorageConfig",
+    "google_cloud_sql.apps.GoogleCloudSqlConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -95,14 +96,18 @@ DATABASES = {
 #     'HOST': '127.0.0.1',
 #     'USER': DB_USER,
 #     'PASSWORD': DB_PASS,
-#     'PORT': '5432',
+#     'PORT': '6432',
 #     'OPTIONS': {
 #         'sslmode': 'disable'
 #     },
 # }
 
 # DATABASES = {
-#     'default': {},
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'application-db',
+#         **database_defaults,
+#     },
 #     'application-db': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'application-db',

@@ -13,5 +13,6 @@ RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --
 COPY . .
 
 EXPOSE 8000
-RUN python manage.py migrate --noinput
+# Temporarily commenting out the migrate command to avoid making conflicting changes to the Cloud SQL database.
+# RUN python manage.py migrate --noinput
 CMD [ "gunicorn", "django_experimentation.wsgi:application", "--bind", "0.0.0.0:8000" ]
