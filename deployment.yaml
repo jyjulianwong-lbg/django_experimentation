@@ -20,6 +20,14 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8000
+        volumeMounts:
+        - mountPath: /usr/src/app/service.json
+          subPath: service.json
+          name: google-app-creds-volume
+      volumes:
+      - name: google-app-creds-volume
+        configMap:
+          name: google-app-creds-configmap
 ---
 apiVersion: v1
 kind: Service
