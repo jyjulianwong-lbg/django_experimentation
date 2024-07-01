@@ -173,14 +173,14 @@ GS_CLIENT = None
 GS_PROJECT_ID = "tnt01-audmsa-bld-01"
 GS_BUCKET_NAME = "tnt01-audcda-bld-01-stb-euwe2-aarp"
 
-GS_CREDS_PATH = BASE_DIR / "google-app-creds" / "google-app-creds.json"
-if os.path.exists(GS_CREDS_PATH):
+_gs_creds_path = BASE_DIR / "google-app-creds" / "google-app-creds.json"
+if os.path.exists(_gs_creds_path):
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         },
     }
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-        GS_CREDS_PATH
+        _gs_creds_path
     )
-    GS_CLIENT = storage.Client.from_service_account_json(GS_CREDS_PATH)
+    GS_CLIENT = storage.Client.from_service_account_json(_gs_creds_path)
