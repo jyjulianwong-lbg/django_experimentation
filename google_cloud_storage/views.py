@@ -1,19 +1,11 @@
-import os
-
 from django.conf import settings
 from django.http.response import HttpResponse
 from google.cloud import storage
-from google.oauth2 import service_account
 from storages.backends.gcloud import GoogleCloudStorage
 
 # Create your views here.
 def using_google_apis(request):
-    if os.path.exists(settings.BASE_DIR / "service.json"):
-        credentials = service_account.Credentials.from_service_account_file(settings.BASE_DIR / "service.json")
-        client = storage.Client(project=settings.GS_PROJECT_ID, credentials=credentials)
-    else:
-        client = storage.Client(project=settings.GS_PROJECT_ID)
-    
+    client = storage.Client(project=settings.GS_PROJECT_ID, credentials=settings.GS_CREDENTIALS)
     bucket = client.get_bucket(settings.GS_BUCKET_NAME)
     path = "aarp/16b88f90-408b-4a75-8a54-0b20e42004a2"
     blob = bucket.blob(path)
@@ -21,9 +13,10 @@ def using_google_apis(request):
     return HttpResponse(blob_content)
 
 def using_django_storages(request):
-    storage_2 = GoogleCloudStorage()
+    # The django-storages version of the Storage instance.
+    ds_storage = GoogleCloudStorage()
     path = "aarp/16b88f90-408b-4a75-8a54-0b20e42004a2"
-    blob = storage_2.bucket.blob(path)
+    blob = ds_storage.bucket.blob(path)
     blob_content = blob.download_as_string()
     return HttpResponse(blob_content)
 

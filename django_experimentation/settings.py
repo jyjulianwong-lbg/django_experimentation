@@ -166,18 +166,21 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom
-GS_BUCKET_NAME = "tnt01-audcda-bld-01-stb-euwe2-aarp"
+# Custom: Google APIs and django-storages
+STORAGES = None
+GS_CREDENTIALS = None
+GS_CLIENT = None
 GS_PROJECT_ID = "tnt01-audmsa-bld-01"
-if os.path.exists(BASE_DIR / "service.json"):
+GS_BUCKET_NAME = "tnt01-audcda-bld-01-stb-euwe2-aarp"
+
+GS_CREDS_PATH = BASE_DIR / "google-app-creds" / "google-app-creds.json"
+if os.path.exists(GS_CREDS_PATH):
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         },
     }
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-        BASE_DIR / "service.json"
+        GS_CREDS_PATH
     )
-    GS_CLIENT = storage.Client.from_service_account_json(
-        BASE_DIR / "service.json"
-    )
+    GS_CLIENT = storage.Client.from_service_account_json(GS_CREDS_PATH)

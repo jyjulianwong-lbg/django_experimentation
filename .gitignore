@@ -6,5 +6,4 @@ data/
 db.sqlite3
 
 # Secrets
-service.json
-tnt01-audmsa-bld-01-fdc2-89eed089d0f5.json
+**/google-app-creds.json

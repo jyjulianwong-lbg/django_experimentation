@@ -1,0 +1,9 @@
+google_app_creds:
+  file_name: google-app-creds
+image:
+  repository: django-experimentation
+  tag: latest
+  workdir: /usr/src/app
+service:
+  type: LoadBalancer
+  port: 8000
