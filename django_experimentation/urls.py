@@ -20,6 +20,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
+    path('google_cloud_bigquery/', include("google_cloud_bigquery.urls")),
     path('google_cloud_sql/', include("google_cloud_sql.urls")),
     path('google_cloud_storage/', include("google_cloud_storage.urls")),
 ]

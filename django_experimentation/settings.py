@@ -170,7 +170,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STORAGES = None
 GS_CREDENTIALS = None
 GS_CLIENT = None
-GS_PROJECT_ID = "tnt01-audmsa-bld-01"
+GS_PROJECT_ID = "tnt01-audmsa-bld-01-fdc2"
 GS_BUCKET_NAME = "tnt01-audcda-bld-01-stb-euwe2-aarp"
 
 _gs_creds_path = BASE_DIR / "google-app-creds" / "google-app-creds.json"
