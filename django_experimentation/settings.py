@@ -80,50 +80,51 @@ WSGI_APPLICATION = 'django_experimentation.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Copied from tnt01-audmsa-aarp-app/blob/main/AARP/settings.py. 
 
-# DB_USER = os.getenv('DB_USER', '')
-# DB_PASS = os.getenv('DB_PASS', '')
+DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
+DB_USER = os.getenv('DB_USER', '')
+DB_PASS = os.getenv('DB_PASS', '')
 
-# database_defaults = {
-#     'HOST': '127.0.0.1',
-#     'USER': DB_USER,
-#     'PASSWORD': DB_PASS,
-#     'PORT': '6432',
-#     'OPTIONS': {
-#         'sslmode': 'disable'
-#     },
-# }
+database_defaults = {
+    'HOST': DB_HOST,
+    'USER': DB_USER,
+    'PASSWORD': DB_PASS,
+    'PORT': '6432',
+    'OPTIONS': {
+        'sslmode': 'disable'
+    },
+}
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'application-db',
-#         **database_defaults,
-#     },
-#     'application-db': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'application-db',
-#         **database_defaults,
-#     },
-#     'automation-db': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'automation-db',
-#         **database_defaults,
-#     },
-#     'reporting-db': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'reporting-db',
-#         **database_defaults,
-#     },
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'application-db',
+        **database_defaults,
+    },
+    'application-db': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'application-db',
+        **database_defaults,
+    },
+    'automation-db': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'automation-db',
+        **database_defaults,
+    },
+    'reporting-db': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'reporting-db',
+        **database_defaults,
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
