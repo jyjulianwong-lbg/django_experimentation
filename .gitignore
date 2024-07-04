@@ -7,4 +7,5 @@ db.sqlite3
 
 # Secrets
 **/google-app-creds.json
+**/google-cloud-sql-secret.yaml
 **/google-cloud-sql-pods.txt
