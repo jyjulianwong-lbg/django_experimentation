@@ -36,8 +36,10 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "polls.apps.PollsConfig",
-    "google_cloud_storage.apps.GoogleCloudStorageConfig",
+    "aarp_ingestion_module_test.apps.AarpIngestionModuleTestConfig",
+    "google_cloud_bigquery.apps.GoogleCloudBigqueryConfig",
     "google_cloud_sql.apps.GoogleCloudSqlConfig",
+    "google_cloud_storage.apps.GoogleCloudStorageConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

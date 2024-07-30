@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tnt01-audmsa-aarp-ingestion-bld
+  labels:
+    jobgroup: tnt01-audmsa-aarp-ingestion-bld
+spec:
+  template:
+    metadata:
+      name: tnt01-audmsa-aarp-ingestion-bld
+      labels:
+        jobgroup: tnt01-audmsa-aarp-ingestion-bld
+    spec:
+      containers:
+      - name: tnt01-audmsa-aarp-ingestion-bld
+        image: tnt01-audmsa-aarp-ingestion:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: APP_ENV
+          value: bld
+        - name: DB_HOST
+          valueFrom: 
+            configMapKeyRef:
+              name: google-cloud-sql-configmap
+              key: postgresql-host
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: google-cloud-sql-secret
+              key: postgresql-username
+        - name: DB_PASS
+          valueFrom: 
+            secretKeyRef:
+              name: google-cloud-sql-secret
+              key: postgresql-password
+        volumeMounts:
+        - name: google-app-creds-volume
+          mountPath: /usr/src/app/google-app-creds
+      volumes:
+      - name: google-app-creds-volume
+        configMap:
+          name: google-app-creds-configmap
+      restartPolicy: Never
+  backoffLimit: 0
