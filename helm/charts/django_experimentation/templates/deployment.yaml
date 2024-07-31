@@ -37,9 +37,9 @@ spec:
               name: google-cloud-sql-secret
               key: postgresql-password
         volumeMounts:
-        - name: {{ .Values.google_app_creds.file_name }}-volume
-          mountPath: {{ .Values.image.workdir }}/{{ .Values.google_app_creds.file_name }}
+        - name: google-app-creds-volume
+          mountPath: {{ .Values.image.workdir }}/google-app-creds
       volumes:
-      - name: {{ .Values.google_app_creds.file_name }}-volume
+      - name: google-app-creds-volume
         configMap:
-          name: {{ .Values.google_app_creds.file_name }}-configmap
+          name: google-app-creds-configmap

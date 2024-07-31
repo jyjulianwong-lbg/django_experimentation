@@ -1,18 +1,20 @@
+---
+# Source: ingestion/templates/job.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: tnt01-audmsa-aarp-ingestion-bld
+  name: ingestion-bld
   labels:
-    jobgroup: tnt01-audmsa-aarp-ingestion-bld
+    jobgroup: ingestion-bld
 spec:
   template:
     metadata:
-      name: tnt01-audmsa-aarp-ingestion-bld
+      name: ingestion-bld
       labels:
-        jobgroup: tnt01-audmsa-aarp-ingestion-bld
+        jobgroup: ingestion-bld
     spec:
       containers:
-      - name: tnt01-audmsa-aarp-ingestion-bld
+      - name: ingestion-bld
         image: tnt01-audmsa-aarp-ingestion:latest
         imagePullPolicy: Never
         ports:

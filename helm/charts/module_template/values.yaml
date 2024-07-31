@@ -1,0 +1,6 @@
+image:
+  repository: MODULE-IMAGE-REPO
+  tag: latest
+  workdir: /usr/src/app
+service:
+  port: MODULE-SERVICE-PORT

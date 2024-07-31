@@ -13,7 +13,7 @@ def index(request):
 def trigger_ingestion(request):
     config.load_kube_config(config_file="C:\\Install\\.kube\\config")  # TODO: Update this to where your config file is.
 
-    manifest_path = settings.BASE_DIR / "module_manifests" / "ingestion-bld-minikube.yaml"
+    manifest_path = settings.BASE_DIR / "module_manifests" / "ingestion-bld-job.yaml"
 
     env_vars = {
         "AARP_HOST_ADDR": "127.0.0.1",  # TODO: This is wrong.

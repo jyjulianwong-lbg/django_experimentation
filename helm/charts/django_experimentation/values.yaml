@@ -1,5 +1,3 @@
-google_app_creds:
-  file_name: google-app-creds
 image:
   repository: django-experimentation
   tag: latest
