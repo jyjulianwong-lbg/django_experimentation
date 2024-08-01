@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-
 import yaml
 from django.conf import settings
 from django.http.response import HttpResponse
@@ -24,7 +21,7 @@ def trigger_ingestion(request):
         # Web app is most likely being run within a container.
         config.load_incluster_config()
         core_v1 = client.CoreV1Api()
-        service = core_v1.read_namespaced_service(name="kubernetes", namespace="default")
+        service = core_v1.read_namespaced_service(name="django-experimentation-bld-service", namespace="default")  # TODO: This has been hard-coded.
         callback_addr = f"http://{service.spec.cluster_ip}:8000/aarp_ingestion_module_test/on_ingestion_completion"
 
     env_vars = {
@@ -56,9 +53,6 @@ def trigger_ingestion(request):
     )
 
 def on_ingestion_completion(request):
-    # return HttpResponse(
-    #     "Ingestion container has completed and returned a response!"
-    # )
     if request.method == 'GET':
         return HttpResponse("You're not supposed to see this.")
     
