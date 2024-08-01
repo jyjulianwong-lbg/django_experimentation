@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-t%40f!k7^)yxw-q2ao4qxc-zlf6$z9_qh0=n6_(@#diov5z11d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "host.minikube.internal",
+]
 
 
 # Application definition
@@ -52,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',  # TODO: I'm really hacking here.
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -90,6 +93,9 @@ WSGI_APPLICATION = 'django_experimentation.wsgi.application'
 # }
 
 # Copied from tnt01-audmsa-aarp-app/blob/main/AARP/settings.py. 
+
+# This is defined as 'APP_ENV' for consistency with main AARP module.
+RTL_ENV = os.getenv('APP_ENV', None)
 
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_USER = os.getenv('DB_USER', '')
