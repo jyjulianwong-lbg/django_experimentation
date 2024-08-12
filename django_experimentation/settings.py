@@ -15,6 +15,10 @@ from pathlib import Path
 
 from google.cloud import storage
 from google.oauth2 import service_account
+from kubernetes import client, config
+
+# This is defined as 'APP_ENV' for consistency with main AARP module.
+RTL_ENV = os.getenv('APP_ENV', None)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,8 +35,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    "host.minikube.internal",
 ]
+# TODO: aarp_ingestion_module_test: Accept all API requests from within the same K8s cluster.
+if RTL_ENV == "bld":
+    # Web app is most likely being run within a container.
+    config.load_incluster_config()
+    core_v1 = client.CoreV1Api()
+    service = core_v1.read_namespaced_service(name="django-experimentation-bld-service", namespace="default")  # TODO: This has been hard-coded.
+    ALLOWED_HOSTS.append(service.spec.cluster_ip)
 
 
 # Application definition
@@ -56,7 +66,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     # TODO: I'm really hacking here.
-    # TODO: This has been removed because in aarp_ingestion_module_test, receiving API requests from the Ingestion module causes a cross-origin security error.
+    # TODO: aarp_ingestion_module_test: This has been removed because receiving API requests from the Ingestion module causes a cross-origin security error.
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -95,9 +105,6 @@ WSGI_APPLICATION = 'django_experimentation.wsgi.application'
 # }
 
 # Copied from tnt01-audmsa-aarp-app/blob/main/AARP/settings.py. 
-
-# This is defined as 'APP_ENV' for consistency with main AARP module.
-RTL_ENV = os.getenv('APP_ENV', None)
 
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_USER = os.getenv('DB_USER', '')

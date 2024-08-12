@@ -57,4 +57,6 @@ def on_ingestion_completion(request):
         return HttpResponse("You're not supposed to see this.")
     
     if request.method == 'POST':
+        print("Ingestion complete! The following was returned:")
+        print(request.POST)
         return HttpResponseRedirect(reverse("aarp_ingestion_module_test:index"))
