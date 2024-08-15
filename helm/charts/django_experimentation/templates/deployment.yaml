@@ -23,6 +23,8 @@ spec:
           env:
             - name: APP_ENV
               value: {{ .Release.Name }}
+            - name: DJANGO_SERVICE_NAME
+              value: {{ .Chart.Name }}-{{ .Release.Name }}-service
             - name: DB_HOST
               valueFrom: 
                 configMapKeyRef:
