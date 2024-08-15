@@ -9,3 +9,10 @@ db.sqlite3
 **/google-app-creds.json
 # **/google-cloud-sql-secret.yaml
 **/google-cloud-sql-pods.txt
+
+##Scripts
+test.py
+
+##Envirroments
+.venv
+.vscode
