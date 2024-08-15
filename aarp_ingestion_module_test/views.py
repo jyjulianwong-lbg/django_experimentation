@@ -4,6 +4,8 @@ from django.http.response import HttpResponse
 from django.urls import reverse
 from django.shortcuts import HttpResponseRedirect
 from kubernetes import client, config
+import os
+#from kubernetes.client.exceptions import ConfigException
 
 # Create your views here.
 def index(request):
@@ -14,14 +16,22 @@ def index(request):
 def trigger_ingestion(request):
     rtl_env = settings.RTL_ENV
     if rtl_env is None:
-        # Web app is most likely being run on a local machine.
-        config.load_kube_config(config_file="C:\\Install\\.kube\\config")  # TODO: Update this to where your config file is.
+        kube_config_path = os.getenv('KUBECONFIG')
+        # If the environment variable is not set, fall back to the default path
+        if not kube_config_path:
+            kube_config_path = os.path.expanduser("~/.kube/config")
+        # Web app is most likely being run on a local machine. 
+        config.load_kube_config(
+            config_file = kube_config_path
+          )  # TODO: Update this to where your config file is.
+
         callback_addr = "http://host.minikube.internal:8000/aarp_ingestion_module_test/on_ingestion_completion"
     if rtl_env == "bld":
         # Web app is most likely being run within a container.
         config.load_incluster_config()
         core_v1 = client.CoreV1Api()
-        service = core_v1.read_namespaced_service(name="django-experimentation-bld-service", namespace="default")  # TODO: This has been hard-coded.
+        service_name=os.getenv('DJANGO_SERVICE_NAME')
+        service = core_v1.read_namespaced_service(name=service_name,namespace='default')
         callback_addr = f"http://{service.spec.cluster_ip}:8000/aarp_ingestion_module_test/on_ingestion_completion"
 
     env_vars = {
@@ -47,16 +57,15 @@ def trigger_ingestion(request):
 
     namespace = "default"
     batch_v1.create_namespaced_job(body=job_manifest, namespace=namespace)
-    
+
     return HttpResponse(
         "Ingestion container has been triggered. Waiting on completion..."
     )
 
+
 def on_ingestion_completion(request):
-    if request.method == 'GET':
+    if request.method == "GET":
         return HttpResponse("You're not supposed to see this.")
-    
-    if request.method == 'POST':
-        print("Ingestion complete! The following was returned:")
-        print(request.POST)
+
+    if request.method == "POST":
         return HttpResponseRedirect(reverse("aarp_ingestion_module_test:index"))
